@@ -20,18 +20,44 @@ int fonction_recursive(int index, int *valeur, vector<int> param2, vector<int>*p
     //int new_index=*index+1;
     // new_index=&index;
     int value_fonction, i=0;
-    for (i=0; i<(*param1).size();i++) {
-        if (*valeur+(*param1)[i]==param2[0]) {
-            (*param1).erase((*param1).begin()+i-1);
-            return *valeur=*valeur+(*param1)[i];
+//     for (i=0; i<(*param1).size();i++) {
+//         if (*valeur+(*param1)[i]==param2[0]) {
+//             (*param1).erase((*param1).begin()+i-1);
+//             cout << "dans le for *valeur = " << *valeur << endl;
+//             return *valeur=*valeur+(*param1)[i];
+//         } else cout << "coucou , itération = " << i << endl;
+//     }
+//     index++;
+//     cout << "index = " << index << endl;
+//     int new_param1=(*param1)[index];
+//     *valeur=*valeur+new_param1;
+//     cout << "*valeur = " << *valeur << endl;
+//     //new_value=*valeur+new_param1;
+//     value_fonction=fonction_recursive(index, valeur, param2, param1);
+//     return value_fonction;
+// }
+
+    if (*valeur+(*param1)[index+1]!=param2[0]) {
+        for (i=0; i<(*param1).size();i++) {
+            if (*valeur+(*param1)[index+1]==param2[0]) {
+                *valeur=*valeur+(*param1)[index+1];
+                (*param1).erase((*param1).begin()+index+1);
+                //cout << "dans le for *valeur = " << *valeur << endl;
+                return *valeur;
+            }
         }
+    } else if (i==(*param1).size()) {
+        index++;
+        cout << "index = " << index << endl;
+        int new_param1=(*param1)[index];
+        *valeur=*valeur+new_param1;
+        //cout << "*valeur = " << *valeur << endl;
+        //new_value=*valeur+new_param1;
+        value_fonction=fonction_recursive(index, valeur, param2, param1);
+        return value_fonction;
     }
-    index++;
-    int new_param1=(*param1)[index];
-    *valeur=*valeur+new_param1;
-    //new_value=*valeur+new_param1;
-    value_fonction=fonction_recursive(index, valeur, param2, param1);
-    return value_fonction;
+    else cout << "coucou , itération = " << i << endl;
+    return 0;
 }
 
 //===============================================//
@@ -183,6 +209,7 @@ int tri(vector<int> param1, vector<int> param2) {
                 conteneur_param2[it]=param1[it-it_erase];
                 param1.erase(param1.begin());
                 it_erase++;
+                //it++;
             }
             if (conteneur_param2[it]<param2[it]) {
                 //cout << "conteneur_param2[it]+param1[it_inverse] =  " << conteneur_param2[it]+param1[it_inverse] << endl;
@@ -222,9 +249,12 @@ int tri(vector<int> param1, vector<int> param2) {
                             cout << "it_erase = " << it_erase << endl;
                             param1.erase(param1.begin()+it_inverse-it_erase-2);
                             it_inverse--;
+                            cout << "it dans for vaut = " << it << endl;
                         }
-                        fonction_recursive(index, &conteneur_param2[it+1], param2, &param1);
+                        //fonction_recursive(index, &conteneur_param2[it+1], param2, &param1);
                     }
+                    cout << "it vaut = " << it << endl;
+                    fonction_recursive(index, &conteneur_param2[it+1], param2, &param1);
                 }
                 else it_inverse--;
             } 
